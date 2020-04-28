@@ -10,19 +10,19 @@ app.use(express.static(clientPath));
 const server = http.createServer(app);
 
 
-app.get('/oldHome', function(req, res){
-    res.redirect('/home');
+app.get('/node-app/oldHome', function(req, res){
+    res.redirect('/node-app/home');
 });
 
-app.get('/home', function(req, res){
+app.get('/node-app/home', function(req, res){
     res.sendFile(path.resolve(`${clientPath}/src/login.html`));
 });
 
-app.get('/get', function(req, res){
+app.get('/node-app/get', function(req, res){
     res.send('This is a simple get request!');
 });
 
-app.post('/post', function(req, res){
+app.post('/node-app/post', function(req, res){
     res.send('This is a simple post request!');
 });
 
