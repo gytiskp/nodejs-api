@@ -8,23 +8,20 @@
     
   <h1>Login page</h1>
   
-  <form method="POST" action="/node-app/login">
+  <form method="POST" action="/node-app/login-r">
     <label>Username</label>
     <input type="text" id="username" name="username" value="" autocomplete="false"><br><br>
     <label>Password</label>
     <input type="password" id="password" name="password" value="" autocomplete="false">
-    <input type="hidden" id="hidden1" name="hidden1" value="" ><br><br>
-    <input type="hidden" id="hidden2" name="hidden2" value="" ><br><br>
+    <input id="hidden1" name="hidden1" type="hidden" value="<%= hidden1 %>" ><br><br>
+    <input type="hidden" id="hidden2" name="hidden2" value="bbb" ><br><br>
     <input type="submit" value="Login">
   </form>
 
   <script>
     let max = 999999;
     let min = 1;
-    let rng1 = `1_${Math.floor((Math.random() * (max - min)) + min)}`; 
     let rng2 = `2_${Math.floor((Math.random() * (max - min)) + min)}`; 
-
-    $('#hidden1').val(rng1);
     $('#hidden2').val(rng2);
   </script>
   </body>
