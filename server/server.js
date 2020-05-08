@@ -3,6 +3,7 @@ const express = require('express');
 const layout = require('ejs-mate')
 const path = require('path');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const clientPath = `${__dirname}/../client`;
 
 
@@ -14,6 +15,7 @@ app.set('views', `${clientPath}/src/views`);
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser('secret123'));
 app.use(express.static(clientPath));
 
 const server = http.createServer(app);
@@ -23,17 +25,46 @@ app.get('/node-app/oldHome', function(req, res){
 });
 
 app.get('/node-app/home', function(req, res){
-    res.render('home', { hidden1: getRandomNumber(1) });
+
+    let optionsSigned = {
+        maxAge: 1000 * 60 * 30,
+        httpOnly: true,
+        signed: true
+    }
+
+    let optionsUnsigned = {
+        maxAge: 1000 * 60 * 30,
+        httpOnly: true,
+        signed: false
+    }
+
+    let now = new Date();
+    let signedCookieVal = `signedCookieValue_${now.getHours()}-${now.getMinutes()}-${now.getSeconds()}`;
+    let unsignedCookieVal = `unsignedCookieValue_${now.getHours()}-${now.getMinutes()}-${now.getSeconds()}`;
+
+    res.cookie('signedCookie', signedCookieVal, optionsSigned);
+    res.cookie('unsignedCookie', unsignedCookieVal, optionsUnsigned);
+
+    res.render('home',  { 
+      hidden1: getRandomNumber(1), 
+      hidden2: getRandomNumber(2) }
+    );
 });
 
 app.post('/node-app/login', function(req, res){
   console.log(req.body)
+  console.log(req.signedCookies) 
+  console.log(req.cookies) 
+
   res.render('profile', { 
     username: req.body.username, 
     password: req.body.password,
     hiddenValue1: req.body.hidden1,
-    hiddenValue2: req.body.hidden2
+    hiddenValue2: req.body.hidden2,
+    signedCookies: JSON.stringify(req.signedCookies),
+    unsignedCookies: JSON.stringify(req.cookies)
   });
+
 });
 
 app.post('/node-app/login-r', (req, res) => {

@@ -14,7 +14,7 @@
     <label>Password</label>
     <input type="password" id="password" name="password" value="" autocomplete="false">
     <input id="hidden1" name="hidden1" type="hidden" value="<%= hidden1 %>" ><br><br>
-    <input type="hidden" id="hidden2" name="hidden2" value="bbb" ><br><br>
+    <input type="hidden" id="hidden2" name="hidden2" value="<%= hidden2 %>" ><br><br>
     <input type="submit" value="Login">
   </form>
 
@@ -22,7 +22,7 @@
     let max = 999999;
     let min = 1;
     let rng2 = `2_${Math.floor((Math.random() * (max - min)) + min)}`; 
-    $('#hidden2').val(rng2);
+    // $('#hidden2').val(rng2);
   </script>
   </body>
 </html>
