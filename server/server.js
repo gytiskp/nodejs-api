@@ -62,7 +62,8 @@ app.post('/node-app/login', function(req, res){
     hiddenValue1: req.body.hidden1,
     hiddenValue2: req.body.hidden2,
     signedCookies: JSON.stringify(req.signedCookies),
-    unsignedCookies: JSON.stringify(req.cookies)
+    unsignedCookies: JSON.stringify(req.cookies),
+    headers: JSON.stringify(req.headers, undefined, 4)
   });
 
 });
